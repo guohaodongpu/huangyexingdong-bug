@@ -1,6 +1,4 @@
 // APP.cpp : Defines the entry point for the console application.
-// By:���ȶ�Ա
-// QQ:89387263
 
 #include "stdafx.h"
 #undef UNICODE
@@ -96,7 +94,7 @@ VOID Ini(){
 }
 
 VOID Ver(){
-	cout << "\n\n  ALT+Q  =========> ��ǽ\n  ALT+W  =========> �ͱ�����\n  ALT+E  =========> ��Ƥ���٣�ſ��ʹ�ã�\n  ALT+R  =========> ����̤��\n    V    =========> �����»�\n    +    =========> �������ֳ��ù��ܣ���ǽ�������졢ȫͼ������\n    -    =========> �ر����й���\n" << endl;
+	cout << "\n\n  ALT+Q  =========> 穿墙\n  ALT+W  =========> 低倍加速\n  ALT+E  =========> 狗皮加速（趴地使用）\n  ALT+R  =========> 飞天踏空\n    V    =========> 极速下机\n    +    =========> 开启部分常用功能（穿墙、人物变红、全图调暗）\n    -    =========> 关闭所有功能\n" << endl;
 }
 
 BOOL WriteByteProcessMemory(int npid,int lpBaseAddress,byte *lpBuffer){
@@ -111,7 +109,7 @@ CHAR *to16(DWORD poi,int addr,char addre[]){
 	unsigned int ui = addr;
 	ui = (ui>>24)|((ui&0xff0000)>>8)|((ui&0xff00)<<8)|(ui<<24);
 	sprintf_s (addre, 32 , "%08X%08X%s", poi, ui, "");
-	//VC6����ʧ���滻��������
+	//VC6编译失败替换这条即可
 	//sprintf (addre, "%08X%08X%s", poi, ui, "");
 	return addre;
 }
@@ -193,9 +191,9 @@ INT AddressStatic(int dycode, int maincode){
 
 CHAR* choi(DWORD six){
 	if(six){
-		return "����";
+		return "开启";
 	}
-	return "�ر�";
+	return "关闭";
 }
 
 BOOL CHRACTERtoRED(){
@@ -256,13 +254,13 @@ BOOL SPEEDto2(){
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 12);
 			WriteDoubleProcessMemory (pid, OVEROLL_BASE, 1000);
 			OVEROLL_CHANGE = false;
-			cout << "ϵͳ��� =========> ����ͻ�������»��Զ��ر�" << endl;
+			cout << "系统输出 =========> （冲突）极速下机自动关闭" << endl;
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 7);
 		}
 		if(DOG_CHANGE){
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 12);
 			DOG_CHANGE = false;
-			cout << "ϵͳ��� =========> ����ͻ����Ƥ�����Զ��ر�" << endl;
+			cout << "系统输出 =========> （冲突）狗皮加速自动关闭" << endl;
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 7);
 		}
 		WriteNumProcessMemory (pid, CHARACTER_BASE, 2000);
@@ -280,10 +278,10 @@ BOOL ALLto7(){
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 12);
 			WriteNumProcessMemory (pid, CHARACTER_BASE, 1000);
 			if(DOG_CHANGE){
-				cout << "ϵͳ��� =========> ����ͻ����Ƥ�����Զ��ر�" << endl;
+				cout << "系统输出 =========> （冲突）狗皮加速自动关闭" << endl;
 			}
 			if(CHARACTER_CHANGE){
-				cout << "ϵͳ��� =========> ����ͻ���ͱ������Զ��ر�" << endl;
+				cout << "系统输出 =========> （冲突）低倍加速自动关闭" << endl;
 			}
 			DOG_CHANGE = CHARACTER_CHANGE = false;
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 7);
@@ -303,13 +301,13 @@ BOOL SPEEDto7(){
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 12);
 			WriteDoubleProcessMemory (pid, OVEROLL_BASE, 1000);
 			OVEROLL_CHANGE = false;
-			cout << "ϵͳ��� =========> ����ͻ�������»��Զ��ر�" << endl;
+			cout << "系统输出 =========> （冲突）极速下机自动关闭" << endl;
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 7);
 		}
 		if(CHARACTER_CHANGE){
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 12);
 			CHARACTER_CHANGE = false;
-			cout << "ϵͳ��� =========> ����ͻ���ͱ������Զ��ر�" << endl;
+			cout << "系统输出 =========> （冲突）低倍加速自动关闭" << endl;
 			SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 7);
 		}
 		WriteNumProcessMemory (pid, CHARACTER_BASE, 7500);
@@ -325,12 +323,12 @@ VOID MoudleIni(){
 	char bits[32];
 	char addre[64];
 	DWORD maincode = GetModuleBaseAddress (pid, "hyxd.exe");
-	//��ձ�ڷ���;
+	//天空变黑防封;
 	DWORD FLY_BAN = maincode + 0x64F573;
 	DWORD FLY_BAN_TMP = maincode + 0x64F2F9;
 	WriteNumProcessMemory (pid, FLY_BAN_TMP, 24);
 	WriteByteProcessMemory (pid, FLY_BAN, tobyte (to16 (0xF30F590D, FLY_BAN_TMP, addre), bits));
-	//������ٷ���;
+	//人物加速防封;
 	DWORD SPEED_BAN_TMP = maincode + 0xB8A8C4;
 	DWORD SPEED_BAN_1 = maincode + 0xB8A8A0;
 	DWORD SPEED_BAN_2 = maincode + 0x64F63F;
@@ -341,29 +339,29 @@ VOID MoudleIni(){
 	WriteByteProcessMemory (pid, SPEED_BAN_2, tobyte (to16 (0xF30F5905, SPEED_BAN_TMP, addre), bits));
 	WriteByteProcessMemory (pid, SPEED_BAN_3, tobyte (to16 (0xF30F1005, SPEED_BAN_TMP, addre), bits));
 	WriteByteProcessMemory (pid, SPEED_BAN_4, tobyte (to16 (0xF30F1005, SPEED_BAN_TMP, addre), bits));
-	//ȫ�ּ��ٷ���;
+	//全局加速防封;
 	DWORD ALL_BAN_TMP = maincode + 0x4532A3;
 	DWORD ALL_BAN = maincode + 0x45325B;
 	WriteDoubleProcessMemory (pid, ALL_BAN_TMP, 1000);
 	WriteByteProcessMemory (pid, ALL_BAN, tobyte (to16 (0xF20F5905, ALL_BAN_TMP, addre), bits));
 
-	cout <<endl <<endl << "�ڴ��ȡ��..." <<endl <<endl;
+	cout <<endl <<endl << "内存读取中..." <<endl <<endl;
 	DWORD COLOR_BASE_ADD = AddressStatic (AddressDy (pid, (BYTE *)COLOR_ADD, sizeof(COLOR_ADD), -0x198, maincode), maincode);
-	printf("ϵͳ��� =========> color��    %08X\n",COLOR_BASE_ADD);
+	printf("系统输出 =========> color：    %08X\n",COLOR_BASE_ADD);
 	DWORD SKY_BASE_ADD = AddressStatic (AddressDy (pid, (BYTE *)SKY_ADD, sizeof(SKY_ADD), 0x2CD, maincode), maincode);
-	printf("ϵͳ��� =========> sky��      %08X\n",SKY_BASE_ADD);
+	printf("系统输出 =========> sky：      %08X\n",SKY_BASE_ADD);
 	DWORD WALL_BASE_ADD = AddressStatic (AddressDy (pid, (BYTE *)WALL_ADD, sizeof(WALL_ADD), -0x9, maincode), maincode);
-	printf("ϵͳ��� =========> wall��     %08X\n",WALL_BASE_ADD);
+	printf("系统输出 =========> wall：     %08X\n",WALL_BASE_ADD);
 	DWORD FLY_BASE_ADD = AddressStatic (AddressDy (pid, (BYTE *)FLY_ADD, sizeof(FLY_ADD), 0x2B, maincode), maincode);
-	printf("ϵͳ��� =========> fly��      %08X\n",FLY_BASE_ADD);
+	printf("系统输出 =========> fly：      %08X\n",FLY_BASE_ADD);
 	DWORD CHARACTER_BASE_ADD = AddressStatic (AddressDy (pid, (BYTE *)CHARACTER_ADD, sizeof(CHARACTER_ADD), 0x0, maincode), maincode);
-	printf("ϵͳ��� =========> character��%08X\n",CHARACTER_BASE_ADD);
+	printf("系统输出 =========> character：%08X\n",CHARACTER_BASE_ADD);
 	DWORD OVEROLL_BASE_ADD = AddressStatic (AddressDy (pid, (BYTE *)OVEROLL_ADD, sizeof(OVEROLL_ADD), -0x4D9, maincode), maincode);
-	printf("ϵͳ��� =========> overall��  %08X\n",OVEROLL_BASE_ADD);
+	printf("系统输出 =========> overall：  %08X\n",OVEROLL_BASE_ADD);
 	if(COLOR_BASE_ADD <=0 || SKY_BASE_ADD <=0 || WALL_BASE_ADD <=0 || FLY_BASE_ADD <=0 || CHARACTER_BASE_ADD <=0 || OVEROLL_BASE_ADD <=0){
-		cout<< endl << "�ڴ��ȡʧ��" <<endl;
+		cout<< endl << "内存读取失败" <<endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),12);
-		cout<< endl << "��ʼ��ʧ��" <<endl <<endl;
+		cout<< endl << "初始化失败" <<endl <<endl;
 		SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE),7);
 		system ("pause");
 		return;
@@ -378,7 +376,7 @@ VOID MoudleIni(){
 
 VOID KeyIni(){
 	RegisterHotKey (NULL, 0x1,  0x0001|0x4000, 0x57);
-	cout << endl << "\n�ڴ��ȡ�ɹ�" << endl;
+	cout << endl << "\n内存读取成功" << endl;
 	system ("cls");
 	Ini ();
 	cout << ALL_ADD;
@@ -396,21 +394,21 @@ VOID KeyIni(){
 	while (GetMessage (&msg, NULL, 0, 0)){
 		if (msg.message == WM_HOTKEY){
 			if (msg.wParam == 0x1){//ALT+W
-				cout << "�û���־ =========> �ͱ�������" << choi (SPEEDto2 ()) << endl;
+				cout << "用户日志 =========> 低倍加速已" << choi (SPEEDto2 ()) << endl;
 			}else if (msg.wParam == 0x2){//ALT+Q
-				cout << "�û���־ =========> ��ǽ��" << choi (CHARACTERtoWALL ()) << endl;
+				cout << "用户日志 =========> 穿墙已" << choi (CHARACTERtoWALL ()) << endl;
 			}else if (msg.wParam == 0xA){//ALT+E
-				cout << "�û���־ =========> ��Ƥ������" << choi (SPEEDto7 ()) << endl;
+				cout << "用户日志 =========> 狗皮加速已" << choi (SPEEDto7 ()) << endl;
 			}else if (msg.wParam == 0x3){//ALT+R
-				cout << "�û���־ =========> ����̤����" << choi (CHARACTERtoFLY ()) << endl;
+				cout << "用户日志 =========> 飞天踏空已" << choi (CHARACTERtoFLY ()) << endl;
 			}else if (msg.wParam == 0x4){//V
-				cout << "�û���־ =========> �����»���" << choi (ALLto7 ()) << endl;
+				cout << "用户日志 =========> 极速下机已" << choi (ALLto7 ()) << endl;
 			}else if (msg.wParam == 0x5 || msg.wParam == 0x6){//+
 				COLOR_CHANGE = SKY_CHANGE = WALL_CHANGE = FALSE;
 				CHRACTERtoRED();
 				SKYtoBLACK();
 				CHARACTERtoWALL();
-				cout << "�û���־ =========> ���ֳ��ù��ܿ����ɹ�" << endl;
+				cout << "用户日志 =========> 部分常用功能开启成功" << endl;
 			}else if (msg.wParam == 0x7 || msg.wParam == 0x8){//-
 				COLOR_CHANGE = SKY_CHANGE = WALL_CHANGE = FLY_CHANGE = CHARACTER_CHANGE = OVEROLL_CHANGE = TRUE;
 				DOG_CHANGE = FALSE;
@@ -420,7 +418,7 @@ VOID KeyIni(){
 				CHARACTERtoFLY();
 				SPEEDto2();
 				ALLto7();
-				cout << "�û���־ =========> ���й��ܹرճɹ�" << endl;
+				cout << "用户日志 =========> 所有功能关闭成功" << endl;
 			}else if (msg.wParam == 0x9){//DEL
 				system("cls");
 				Ini();
@@ -435,7 +433,7 @@ int main(int argc, char* argv[]){
 	pid = GetPid ("hyxd.exe");
 	if (pid <= 0){
 		SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 12);
-		printf("��ʼ��ʧ��\n\n");
+		printf("初始化失败\n\n");
 		SetConsoleTextAttribute (GetStdHandle (STD_OUTPUT_HANDLE), 7);
 		system ("pause");
 		return 0;
